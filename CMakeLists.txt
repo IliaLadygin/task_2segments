@@ -42,6 +42,7 @@ else()
             vector3D.cpp
             segment3D.cpp
             segment3D.h
+            minorcalcs.cpp
         )
     endif()
 endif()

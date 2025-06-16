@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "vector3D.h"
+#include "segment3D.h"
 #include <QDebug.h>
 
 QT_BEGIN_NAMESPACE
