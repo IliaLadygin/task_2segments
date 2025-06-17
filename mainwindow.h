@@ -5,6 +5,8 @@
 
 #include "vector3D.h"
 #include "segment3D.h"
+
+#include <QRegExpValidator>
 #include <QDebug.h>
 
 QT_BEGIN_NAMESPACE
@@ -19,6 +21,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    void calc_ans(Vector3D A, Vector3D B, Vector3D C, Vector3D D);
     ~MainWindow();
 
 public slots:

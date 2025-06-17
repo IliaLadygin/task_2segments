@@ -6,19 +6,96 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    if (true) // TODO разобраться, как добавить в файл .ui
+    {
+        QRegExp RegExp("^[\\+|\\-]?\\d*([\\.|,]?\\d*)$"); // регулярное выражение, принимающее только числа с плавающей точкой
+        QValidator *Validator = new QRegExpValidator(RegExp, this);
+        ui->LineEditAx->setValidator(Validator);    ui->LineEditAy->setValidator(Validator);    ui->LineEditAz->setValidator(Validator);
+        ui->LineEditBx->setValidator(Validator);    ui->LineEditBy->setValidator(Validator);    ui->LineEditBz->setValidator(Validator);
+        ui->LineEditCx->setValidator(Validator);    ui->LineEditCy->setValidator(Validator);    ui->LineEditCz->setValidator(Validator);
+        ui->LineEditDx->setValidator(Validator);    ui->LineEditDy->setValidator(Validator);    ui->LineEditDz->setValidator(Validator);
+    }
 
-    // Connect signals
-    // QObject::connect(ui->pushButtonCalcIntersect, &QAbstractButton::clicked, MainWindow::on_pushButtonCalcIntersect_clicked());
+#ifdef QT_DEBUG
+    {
+        Vector3D A(1, 1, 0, "DebugA");    Vector3D B(-1, 0, 0, "DebugB");
+        Vector3D C(0, 2, 0, "DebugC");    Vector3D D(0, -2, 0, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = (0, 0.5, 0)");
+        calc_ans(A, B, C, D);
+    }
+    {
+        Vector3D A(0, 1, 1, "DebugA");    Vector3D B(0, 3, 1, "DebugB");
+        Vector3D C(0, 2, -2, "DebugC");    Vector3D D(0, 2, 2, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = (0, 2, 1)");
+        calc_ans(A, B, C, D);
+    }
+    {
+        Vector3D A(0, 0, 1, "DebugA");    Vector3D B(0, 0, -1, "DebugB");
+        Vector3D C(1, 0, -2, "DebugC");    Vector3D D(0, 0, 2, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = x");
+        calc_ans(A, B, C, D);
+    }
+    {
+        Vector3D A(0, 0, 1, "DebugA");    Vector3D B(0, 0, -1, "DebugB");
+        Vector3D C(1, 0, -2, "DebugC");    Vector3D D(1, 0, 2, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = x");
+        calc_ans(A, B, C, D);
+    }
+    {
+        Vector3D A(0, 0, 1, "DebugA");    Vector3D B(0, 0, -1, "DebugB");
+        Vector3D C(0, 0, 1, "DebugC");    Vector3D D(1, 0, 2, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = (0, 0, 1)");
+        calc_ans(A, B, C, D);
+    }
+    {
+        Vector3D A(0, 0, 1, "DebugA");    Vector3D B(0, 0, -1, "DebugB");
+        Vector3D C(0, 0, 1, "DebugC");    Vector3D D(1, 1, 2, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = (0, 0, 1)");
+        calc_ans(A, B, C, D);
+    }
+    /*
+        \note Скорее всего указанные точки недостаточно точные
+    */
+    {
+        Vector3D A(1, 1, 3.5, "DebugA");    Vector3D B(0.5, 0.3, -1, "DebugB");
+        Vector3D C(-1.2, -2, 1, "DebugC");    Vector3D D(1.86, 2.16, 1.99, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = (0.79, 0.71, 1.65)");
+        calc_ans(A, B, C, D);
+    }
+    /*
+        \note Скорее всего указанные точки недостаточно точные
+    */
+    {
+        Vector3D A(1, 1, 3.5, "DebugA");    Vector3D B(0.5, 0.3, -1, "DebugB");
+        Vector3D C(-1.2, -2, 1, "DebugC");    Vector3D D(0.79, 0.71, 1.65, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = (0.79, 0.71, 1.65)");
+        calc_ans(A, B, C, D);
+    }
+    /*
+        \note "Нулевой" сегмент, принадлежащий второму сегменту
+    */
+    {
+        Vector3D A(0, 0, 0, "DebugA");    Vector3D B(0, 0, 0, "DebugB");
+        Vector3D C(-1.2, -1.2, -1.2, "DebugC");    Vector3D D(1.2, 1.2, 1.2, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = (0, 0, 0)");
+        calc_ans(A, B, C, D);
+    }
+#endif
 }
 
 void MainWindow::on_pushButtonCalcIntersect_clicked()
 {
-    qInfo() << "Calculate intersection started.";
-    ui->textBrowser->append("=== NEW CALCULATIONS STARTED ===");
     Vector3D A(ui->LineEditAx->text().toDouble(), ui->LineEditAy->text().toDouble(), ui->LineEditAz->text().toDouble(), "A");
     Vector3D B(ui->LineEditBx->text().toDouble(), ui->LineEditBy->text().toDouble(), ui->LineEditBz->text().toDouble(), "B");
     Vector3D C(ui->LineEditCx->text().toDouble(), ui->LineEditCy->text().toDouble(), ui->LineEditCz->text().toDouble(), "C");
     Vector3D D(ui->LineEditDx->text().toDouble(), ui->LineEditDy->text().toDouble(), ui->LineEditDz->text().toDouble(), "D");
+    calc_ans(A, B, C, D);
+}
+
+void MainWindow::calc_ans(Vector3D A, Vector3D B, Vector3D C, Vector3D D)
+{
+    qInfo() << "\nCalculate intersection started.";
+    ui->textBrowser->append("=== NEW CALCULATIONS STARTED ===");
     // ui->textBrowser->append(QString::fromStdString(A.get_string_to_show()));
     // ui->textBrowser->append(QString::fromStdString(B.get_string_to_show()));
     // ui->textBrowser->append(QString::fromStdString(C.get_string_to_show()));
@@ -40,7 +117,8 @@ void MainWindow::on_pushButtonCalcIntersect_clicked()
     if (AB.is_exists_equal_surface_to(CD))
     {
         qInfo() << "General surface exists.";
-        if (AB.is_collinear_to_segment(CD))
+        Segment3D::Collinear collinear = AB.is_collinear_to_segment(CD);
+        if (collinear.m_is_collinear)
         {
             qInfo() << "Segments are collinear - intersection point does not exist.";
             ui->textBrowser->append("Segments are collinear - intersection point does not exist.");
@@ -48,9 +126,10 @@ void MainWindow::on_pushButtonCalcIntersect_clicked()
         else
         {
             qDebug() << "Calculate coefficients for vectors...";
-            double u = Segment3D::calc_u_to_segments(AB, CD);
+            qDebug() << "Calculated det:" << collinear.m_det_number << "with det:" << collinear.m_det;
+            double u = Segment3D::calc_u_to_segments(AB, CD, Vector3D::eps, collinear.m_det_number);
             qDebug() << "Calculated u:" << u;
-            double v = Segment3D::calc_v_to_segments(AB, CD);
+            double v = Segment3D::calc_v_to_segments(AB, CD, Vector3D::eps, collinear.m_det_number);
             qDebug() << "Calculated v:" << v;
             if ((0 <= u && u <= 1) && (0 <= v && v <= 1))
             {

@@ -43,6 +43,7 @@ else()
             segment3D.cpp
             segment3D.h
             minorcalcs.cpp
+            readme.md
         )
     endif()
 endif()

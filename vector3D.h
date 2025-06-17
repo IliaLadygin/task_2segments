@@ -14,7 +14,8 @@ public:
     Vector3D(double x, double y, double z, std::string name);
     Vector3D();
     std::string get_string_to_show();
-    double eps = std::pow(10, -12);
+    static inline double eps = std::pow(10, -12); // для сравнивания с нулём (машинная точность)
+
     // Getters
     double x();
     double y();
