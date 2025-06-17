@@ -263,3 +263,22 @@ Vector3D Segment3D::calc_intersection_point_by_uv_and_seg(double u, double v, Se
     Vector3D final_point = Vector3D(x, y, z, "P");
     return final_point;
 }
+
+/*
+    \note Вычисление расстояний между точками
+*/
+bool Segment3D::is_consist_point(Vector3D point)
+{
+    Segment3D seg1(Vector3D(this->start.x(), this->start.y(), this->start.z(), "AddVector1"), Vector3D(point.x(), point.y(), point.z(), "AddVector2"), "AddSegment1");
+    Segment3D seg2(Vector3D(point.x(), point.y(), point.z(), "AddVector3"), Vector3D(this->end.x(), this->end.y(), this->end.z(), "AddVector4"), "AddSegment2");
+    return std::abs((seg1.norm() + seg2.norm()) - this->norm()) < Vector3D::eps;
+}
+
+/* Euclidean norm */
+double Segment3D::norm()
+{
+    double summa = std::pow(this->end.x() - this->start.x(), 2)
+                    + std::pow(this->end.y() - this->start.y(), 2)
+                    + std::pow(this->end.z() - this->start.z(), 2);
+    return std::pow(summa, 0.5);
+}

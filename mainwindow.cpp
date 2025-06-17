@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
         ui->LineEditDx->setValidator(Validator);    ui->LineEditDy->setValidator(Validator);    ui->LineEditDz->setValidator(Validator);
     }
 
+// Здесь описаны тестовые сегменты для быстрой отладки. Отключаются в релиз версии
 #ifdef QT_DEBUG
     {
         Vector3D A(1, 1, 0, "DebugA");    Vector3D B(-1, 0, 0, "DebugB");
@@ -53,30 +54,27 @@ MainWindow::MainWindow(QWidget *parent)
         ui->textBrowser->append("__Debug calc__ || ans = (0, 0, 1)");
         calc_ans(A, B, C, D);
     }
-    /*
-        \note Скорее всего указанные точки недостаточно точные
-    */
-    {
+    {   // \note Скорее всего указанные точки недостаточно точные
         Vector3D A(1, 1, 3.5, "DebugA");    Vector3D B(0.5, 0.3, -1, "DebugB");
         Vector3D C(-1.2, -2, 1, "DebugC");    Vector3D D(1.86, 2.16, 1.99, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = (0.79, 0.71, 1.65)");
         calc_ans(A, B, C, D);
     }
-    /*
-        \note Скорее всего указанные точки недостаточно точные
-    */
-    {
+    {   // \note Скорее всего указанные точки недостаточно точные
         Vector3D A(1, 1, 3.5, "DebugA");    Vector3D B(0.5, 0.3, -1, "DebugB");
         Vector3D C(-1.2, -2, 1, "DebugC");    Vector3D D(0.79, 0.71, 1.65, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = (0.79, 0.71, 1.65)");
         calc_ans(A, B, C, D);
     }
-    /*
-        \note "Нулевой" сегмент, принадлежащий второму сегменту
-    */
-    {
-        Vector3D A(0, 0, 0, "DebugA");    Vector3D B(0, 0, 0, "DebugB");
+    {   // \note "Нулевой" сегмент, принадлежащий второму сегменту
+        Vector3D A(-1, -1, -1, "DebugA");    Vector3D B(-1, -1, -1, "DebugB");
         Vector3D C(-1.2, -1.2, -1.2, "DebugC");    Vector3D D(1.2, 1.2, 1.2, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = (0, 0, 0)");
+        calc_ans(A, B, C, D);
+    }
+    {   // \note "Нулевой" сегмент, принадлежащий второму сегменту
+        Vector3D A(-1.2, -1.2, -1.2, "DebugA");    Vector3D B(1.2, 1.2, 1.2, "DebugB");
+        Vector3D C(1, 1, 1, "DebugC");    Vector3D D(1, 1, 1, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = (0, 0, 0)");
         calc_ans(A, B, C, D);
     }
@@ -120,8 +118,32 @@ void MainWindow::calc_ans(Vector3D A, Vector3D B, Vector3D C, Vector3D D)
         Segment3D::Collinear collinear = AB.is_collinear_to_segment(CD);
         if (collinear.m_is_collinear)
         {
-            qInfo() << "Segments are collinear - intersection point does not exist.";
-            ui->textBrowser->append("Segments are collinear - intersection point does not exist.");
+            // Проверка, нет ли
+            if (AB.norm() < Vector3D::eps)
+            {
+                qDebug() << "Segment AB have zero length.";
+                ui->textBrowser->append("Segment AB have zero length.");
+                if (CD.is_consist_point(AB.getStart()))
+                {
+                    qInfo() << "Point A is belongs to the segment CD and it is a intersection point.";
+                    ui->textBrowser->append("Point A is belongs to the segment CD and it is a intersection point.");
+                }
+            }
+            else if (CD.norm() < Vector3D::eps)
+            {
+                qDebug() << "Segment CD have zero length.";
+                ui->textBrowser->append("Segment CD have zero length.");
+                if (AB.is_consist_point(CD.getStart()))
+                {
+                    qInfo() << "Point C is belongs to the segment AB and it is a intersection point.";
+                    ui->textBrowser->append("Point C is belongs to the segment AB and it is a intersection point.");
+                }
+            }
+            else
+            {
+                qInfo() << "Segments are collinear and intersection point does not exist.";
+                ui->textBrowser->append("Segments are collinear and intersection point does not exist.");
+            }
         }
         else
         {
