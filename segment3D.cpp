@@ -1,6 +1,6 @@
 #include "segment3D.h"
 
-#include <QDebug.h> // TODO Delete when end
+// #include <QDebug.h> // TODO Delete when end
 
 Segment3D::Segment3D(Vector3D Start, Vector3D End, std::string Name)
 {
@@ -279,7 +279,6 @@ bool Segment3D::is_point_belongs_to_line(Vector3D point)
     x = flag_x < eps ? (point.x() - this->start.x()) : (point.x() - this->start.x()) / (this->start.x() - this->end.x());
     y = flag_y < eps ? (point.y() - this->start.y()) : (point.y() - this->start.y()) / (this->start.y() - this->end.y());
     z = flag_z < eps ? (point.z() - this->start.z()) : (point.z() - this->start.z()) / (this->start.z() - this->end.z());
-    qDebug() << x << y << z;
     if (flag_x || flag_y || flag_z)
     {
         if (flag_x && flag_y || flag_x && flag_z || flag_z && flag_y) return true;
