@@ -1,5 +1,4 @@
 #include "vector3D.h"
-#include "QDebug"
 
 Vector3D::Vector3D(double x, double y, double z, std::string name)
 {
@@ -89,6 +88,30 @@ bool Vector3D::is_collinear_with(Vector3D vector)
 std::string Vector3D::get_string_to_show()
 {
     return this->Name + "(" + std::to_string(this->x()) + ", " + std::to_string(this->y()) + ", " + std::to_string(this->z()) + ")";
+}
+
+/*
+ * \note Предназначена ТОЛЬКО для выбора координат с "ненулевым определителем"
+ * // TODO не является универсальной функцией, что наверное не хорошо
+ */
+Vector3D::Collinear Vector3D::get_absmax()
+{
+    Collinear ans;
+    if (std::abs(this->X) >= std::abs(this->Y) && std::abs(this->X) >= std::abs(this->Z)) {
+        ans.m_det = this->X;
+        ans.m_det_number = 1;
+    }
+    else if (std::abs(this->Y) >= std::abs(this->X) && std::abs(this->Y) >= std::abs(this->Z)) {
+        ans.m_det = -this->Y;
+        ans.m_det_number = 2;
+    }
+    else if (std::abs(this->Z) >= std::abs(this->Y) && std::abs(this->Z) >= std::abs(this->X)) {
+        ans.m_det = this->Z;
+        ans.m_det_number = 3;
+    }
+    if (std::abs(this->X) < eps && std::abs(this->Y) < eps && std::abs(this->Z) < eps) ans.m_is_collinear = true;
+    else ans.m_is_collinear = false;
+    return ans;
 }
 
 double Vector3D::x()

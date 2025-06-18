@@ -181,7 +181,7 @@ void MainWindow::calc_ans(Vector3D A, Vector3D B, Vector3D C, Vector3D D)
     if (AB.is_exists_equal_surface_to(CD))
     {
         qDebug() << "General surface exists.";
-        Segment3D::Collinear collinear = AB.is_collinear_to_segment(CD);
+        Vector3D::Collinear collinear = AB.is_collinear_to_segment(CD);
         if (collinear.m_is_collinear)
         {
             qDebug() << "Segment AB is collinear to segment CD.";
@@ -271,9 +271,9 @@ void MainWindow::calc_ans(Vector3D A, Vector3D B, Vector3D C, Vector3D D)
         {
             qDebug() << "Calculate coefficients for vectors...";
             qDebug() << "Calculated det:" << collinear.m_det_number << "with det:" << collinear.m_det;
-            double u = Segment3D::calc_u_to_segments(AB, CD, Vector3D::eps, collinear.m_det_number);
+            double u = Segment3D::calc_u_to_segments(AB, CD, collinear);
             qDebug() << "Calculated u:" << u;
-            double v = Segment3D::calc_v_to_segments(AB, CD, Vector3D::eps, collinear.m_det_number);
+            double v = Segment3D::calc_v_to_segments(AB, CD, collinear);
             qDebug() << "Calculated v:" << v;
             if ((0 <= u && u <= 1) && (0 <= v && v <= 1))
             {
