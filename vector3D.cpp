@@ -8,24 +8,35 @@ Vector3D::Vector3D(double x, double y, double z, std::string name)
     this->Z = z;
     this->Name = name;
 }
-
+Vector3D::Vector3D(double x, double y, double z)
+{
+    this->X = x;
+    this->Y = y;
+    this->Z = z;
+    this->Name = "undefined";
+}
 Vector3D::Vector3D()
 {
     this->X = 0;
     this->Y = 0;
     this->Z = 0;
-    this->Name = "indefined";
+    this->Name = "undefined";
 }
 
 
-Vector3D Vector3D::operator- (const Vector3D vector)
+Vector3D Vector3D::operator-(const Vector3D vector)
 {
     Vector3D ans(this->X - vector.X, this->Y - vector.Y, this->Z - vector.Z, this->Name + "-" + vector.Name);
     return ans;
 }
-Vector3D Vector3D::operator+ (const Vector3D vector)
+Vector3D Vector3D::operator+(const Vector3D vector)
 {
-    Vector3D ans(this->X + vector.X, this->Y - vector.Y, this->Z - vector.Z, this->Name + "+" + vector.Name);
+    Vector3D ans(this->X + vector.X, this->Y + vector.Y, this->Z + vector.Z, this->Name + "+" + vector.Name);
+    return ans;
+}
+Vector3D Vector3D::operator*(const double scalar)
+{
+    Vector3D ans(this->X * scalar, this->Y * scalar, this->Z * scalar, this->Name);
     return ans;
 }
 
@@ -71,10 +82,7 @@ double Vector3D::norm()
 
 bool Vector3D::is_collinear_with(Vector3D vector)
 {
-    if (this->norm() < eps || vector.norm() < eps) return true; // TODO подумать, что лучше в таком случае возвращать
-    qDebug() << this->scalar_mult(vector);
-    qDebug() << this->norm();
-    qDebug() << vector.norm();
+    if (this->norm() < eps || vector.norm() < eps) return true;
     return std::abs(std::abs(this->scalar_mult(vector)) / (this->norm() * vector.norm()) - 1) < eps;
 }
 
@@ -87,13 +95,15 @@ double Vector3D::x()
 {
     return this->X;
 }
-
 double Vector3D::y()
 {
     return this->Y;
 }
-
 double Vector3D::z()
 {
     return this->Z;
+}
+void Vector3D::setName(std::string name)
+{
+    this->Name = name;
 }

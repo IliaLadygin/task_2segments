@@ -19,6 +19,9 @@ public:
     // Getters
     Vector3D getStart();
     Vector3D getEnd();
+
+    // Setter
+    void setName(std::string Name);
     // Intersection helps
     bool is_exists_equal_surface_to(Segment3D segment);
     double norm();
@@ -29,7 +32,7 @@ public:
     };
     Collinear is_collinear_to_segment(Segment3D segment);
     bool is_consist_point(Vector3D point);
-    bool is_point_belongs_to_line(Vector3D point);
+    bool is_line_with_segment_consist_point(Vector3D point);
     static double calc_u_to_segments(Segment3D seg1, Segment3D seg2, double eps, int non_zero_det);
     static double calc_v_to_segments(Segment3D seg1, Segment3D seg2, double eps, int non_zero_det);
 

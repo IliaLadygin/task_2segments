@@ -13,11 +13,13 @@ private:
 
 public:
     Vector3D(double x, double y, double z, std::string name);
+    Vector3D(double x, double y, double z);
     Vector3D();
     std::string get_string_to_show();
     static const inline double eps = std::pow(10, -12); // для сравнивания с нулём (машинная точность)
-    Vector3D operator - (const Vector3D vector);
-    Vector3D operator + (const Vector3D vector);
+    Vector3D operator-(const Vector3D vector);
+    Vector3D operator+(const Vector3D vector);
+    Vector3D operator*(const double scalar);
     double scalar_mult(const Vector3D vector);
     double norm();
     Vector3D vector_mult(const Vector3D vector);
@@ -28,6 +30,8 @@ public:
     double y();
     double z();
 
+    // Setter
+    void setName(std::string name);
 
 
 };

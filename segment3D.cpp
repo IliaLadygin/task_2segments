@@ -27,6 +27,12 @@ Vector3D Segment3D::getEnd()
     return this->end;
 }
 
+// Setter
+void Segment3D::setName(std::string Name)
+{
+    this->name = Name;
+}
+
 std::string Segment3D::get_string_to_show()
 {
     return this->name + ": " + this->start.get_string_to_show() + "-" + this->end.get_string_to_show();
@@ -36,8 +42,6 @@ bool Segment3D::is_exists_equal_surface_to(Segment3D segment)
 {
     Vector3D v1 = (this->end - this->start).vector_mult(segment.end - this->start);
     Vector3D v2 = (this->end - this->start).vector_mult(segment.start - this->start);
-    qDebug() << QString::fromStdString(v1.get_string_to_show());
-    qDebug() << QString::fromStdString(v2.get_string_to_show());
     return v1.is_collinear_with(v2);
 }
 
@@ -247,53 +251,32 @@ double Segment3D::calc_v_to_segments(Segment3D seg1, Segment3D seg2, double eps,
     \note Подстановка в каноническое уравнение прямой
     \note Дополнительная проверка от деления на ноль
 */
-bool Segment3D::is_point_belongs_to_line(Vector3D point)
+bool Segment3D::is_line_with_segment_consist_point(Vector3D point)
 {
-    double x, y, z;
-    bool flag_x, flag_y, flag_z;
-    if ((std::abs((this->start.x() - this->end.x())) < eps) && (std::abs(point.x() - this->start.x()) > eps))   return false;
-    else flag_x = std::abs((this->start.x() - this->end.x())) < eps;
-    if ((std::abs((this->start.y() - this->end.y())) < eps) && (std::abs(point.y() - this->start.y()) > eps))   return false;
-    else flag_y = std::abs((this->start.y() - this->end.y())) < eps;
-    if ((std::abs((this->start.z() - this->end.z())) < eps) && (std::abs(point.z() - this->start.z()) > eps))   return false;
-    else flag_z = std::abs((this->start.z() - this->end.z())) < eps;
-    x = flag_x < eps ? (point.x() - this->start.x()) : (point.x() - this->start.x()) / (this->start.x() - this->end.x());
-    y = flag_y < eps ? (point.y() - this->start.y()) : (point.y() - this->start.y()) / (this->start.y() - this->end.y());
-    z = flag_z < eps ? (point.z() - this->start.z()) : (point.z() - this->start.z()) / (this->start.z() - this->end.z());
-    if (flag_x || flag_y || flag_z)
-    {
-        if (flag_x && flag_y || flag_x && flag_z || flag_z && flag_y) return true;
-        if (flag_x) return std::abs(y - z) < eps;
-        if (flag_y) return std::abs(x - z) < eps;
-        if (flag_z) return std::abs(y - x) < eps;
-    }
-    return (std::abs(x - y) < eps && std::abs(y - z) < eps);
+    Vector3D v1 = point - this->start;
+    Vector3D v2 = point - this->end;
+    return v1.is_collinear_with(v2);
 }
 
 Vector3D Segment3D::calc_intersection_point_by_uv_and_seg(double u, double v, Segment3D AB)
 {
-    double x = u * (AB.getStart().x() - AB.getEnd().x()) + AB.getEnd().x();
-    double y = u * (AB.getStart().y() - AB.getEnd().y()) + AB.getEnd().y();
-    double z = u * (AB.getStart().z() - AB.getEnd().z()) + AB.getEnd().z();
-    Vector3D final_point = Vector3D(x, y, z, "P");
-    return final_point;
+    Vector3D ans = (AB.getStart() - AB.getEnd()) * u + AB.getEnd();
+    ans.setName("P"); // Просто чтобы не нагромождать вывод
+    return ans;
 }
 
 /*
-    \note Вычисление расстояний между точками
+    \note Вычисление расстояний между точками и сравнение с длиной сегмента
 */
 bool Segment3D::is_consist_point(Vector3D point)
 {
-    Segment3D seg1(Vector3D(this->start.x(), this->start.y(), this->start.z(), "AddVector1"), Vector3D(point.x(), point.y(), point.z(), "AddVector2"), "AddSegment1");
-    Segment3D seg2(Vector3D(point.x(), point.y(), point.z(), "AddVector3"), Vector3D(this->end.x(), this->end.y(), this->end.z(), "AddVector4"), "AddSegment2");
-    return std::abs((seg1.norm() + seg2.norm()) - this->norm()) < Vector3D::eps;
+    Vector3D v1 = this->start - point;
+    Vector3D v2 = point - this->end;
+    return std::abs((v1.norm() + v2.norm()) - this->norm()) < eps;
 }
 
 /* Euclidean norm */
 double Segment3D::norm()
 {
-    double summa = std::pow(this->end.x() - this->start.x(), 2)
-                    + std::pow(this->end.y() - this->start.y(), 2)
-                    + std::pow(this->end.z() - this->start.z(), 2);
-    return std::pow(summa, 0.5);
+    return (this->start - this->end).norm();
 }

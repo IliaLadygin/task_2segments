@@ -215,7 +215,7 @@ void MainWindow::calc_ans(Vector3D A, Vector3D B, Vector3D C, Vector3D D)
             else
             {
                 // Проверка не лежат ли сегменты на одной прямой
-                if (AB.is_point_belongs_to_line(C))
+                if (AB.is_line_with_segment_consist_point(C))
                 {
                     if (AB.is_consist_point(C) || AB.is_consist_point(D) || CD.is_consist_point(A) || CD.is_consist_point(B))
                     {
