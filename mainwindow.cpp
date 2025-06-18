@@ -78,6 +78,54 @@ MainWindow::MainWindow(QWidget *parent)
         ui->textBrowser->append("__Debug calc__ || ans = (0, 0, 0)");
         calc_ans(A, B, C, D);
     }
+    {   // \note сегменты лежат на одной линии, но не пересекаются
+        Vector3D A(1, 0, 0, "DebugA");    Vector3D B(-1, 0, 0, "DebugB");
+        Vector3D C(2, 0, 0, "DebugC");    Vector3D D(4, 0, 0, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии, но не пересекаются");
+        calc_ans(A, B, C, D);
+    }
+    {   // \note сегменты лежат на одной линии и пересекаются в одной точке
+        Vector3D A(1, 0, 0, "DebugA");    Vector3D B(-1, 0, 0, "DebugB");
+        Vector3D C(1, 0, 0, "DebugC");    Vector3D D(4, 0, 0, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии и пересекаются в одной точке");
+        calc_ans(A, B, C, D);
+    }
+    {   // \note сегменты лежат на одной линии и имеют целый сегмент пересечений AC
+        Vector3D A(1, 0, 0, "DebugA");    Vector3D B(-1, 0, 0, "DebugB");
+        Vector3D C(0, 0, 0, "DebugC");    Vector3D D(4, 0, 0, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений AC");
+        calc_ans(A, B, C, D);
+    }
+    {   // \note сегменты лежат на одной линии и имеют целый сегмент пересечений BC
+        Vector3D A(-1, 0, 0, "DebugA");    Vector3D B(1, 0, 0, "DebugB");
+        Vector3D C(0, 0, 0, "DebugC");    Vector3D D(4, 0, 0, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений BC");
+        calc_ans(A, B, C, D);
+    }
+    {   // \note сегменты лежат на одной линии и имеют целый сегмент пересечений DB
+        Vector3D A(-1, 0, 0, "DebugA");    Vector3D B(1, 0, 0, "DebugB");
+        Vector3D C(4, 0, 0, "DebugC");    Vector3D D(0, 0, 0, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений DB");
+        calc_ans(A, B, C, D);
+    }
+    {   // \note сегменты лежат на одной линии и имеют целый сегмент пересечений DA
+        Vector3D A(-1, 0, 0, "DebugA");    Vector3D B(1, 0, 0, "DebugB");
+        Vector3D C(-4, 0, 0, "DebugC");    Vector3D D(0, 0, 0, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений DA");
+        calc_ans(A, B, C, D);
+    }
+    {   // \note сегмент CD внутри сегмента AB
+        Vector3D A(5, 0, 1, "DebugA");    Vector3D B(2, 0, 1, "DebugB");
+        Vector3D C(3, 0, 1, "DebugC");    Vector3D D(4, 0, 1, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = сегмент CD внутри сегмента AB");
+        calc_ans(A, B, C, D);
+    }
+    {   // \note сегмент AB внутри сегмента CD
+        Vector3D A(3, 0, 1, "DebugA");    Vector3D B(4, 0, 1, "DebugB");
+        Vector3D C(5, 0, 1, "DebugC");    Vector3D D(2, 0, 1, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = сегмент AB внутри сегмента CD");
+        calc_ans(A, B, C, D);
+    }
 #endif
 }
 
@@ -118,31 +166,95 @@ void MainWindow::calc_ans(Vector3D A, Vector3D B, Vector3D C, Vector3D D)
         Segment3D::Collinear collinear = AB.is_collinear_to_segment(CD);
         if (collinear.m_is_collinear)
         {
-            // Проверка, нет ли
-            if (AB.norm() < Vector3D::eps)
+            if (AB.norm() < Vector3D::eps) // Проверки на нулевые сегменты
             {
-                qDebug() << "Segment AB have zero length.";
-                ui->textBrowser->append("Segment AB have zero length.");
-                if (CD.is_consist_point(AB.getStart()))
-                {
-                    qInfo() << "Point A is belongs to the segment CD and it is a intersection point.";
-                    ui->textBrowser->append("Point A is belongs to the segment CD and it is a intersection point.");
+                qDebug() << "Segment AB has zero length.";
+                ui->textBrowser->append("Segment AB has zero length.");
+                if (CD.is_consist_point(AB.getStart())) {
+                    qInfo() << "Point A (or equal point B) is belongs to the segment CD and it is a intersection point.";
+                    ui->textBrowser->append("Point A (or equal point B) is belongs to the segment CD and it is a intersection point.");
+                }
+                else {
+                    qInfo() << "Intersection point does not exist.";
+                    ui->textBrowser->append("Intersection point does not exist.");
                 }
             }
             else if (CD.norm() < Vector3D::eps)
             {
-                qDebug() << "Segment CD have zero length.";
-                ui->textBrowser->append("Segment CD have zero length.");
-                if (AB.is_consist_point(CD.getStart()))
-                {
-                    qInfo() << "Point C is belongs to the segment AB and it is a intersection point.";
-                    ui->textBrowser->append("Point C is belongs to the segment AB and it is a intersection point.");
+                qDebug() << "Segment CD has zero length.";
+                ui->textBrowser->append("Segment CD has zero length.");
+                if (AB.is_consist_point(CD.getStart())) {
+                    qInfo() << "Point C (or equal point D) is belongs to the segment AB and it is a intersection point.";
+                    ui->textBrowser->append("Point C (or equal point D) is belongs to the segment AB and it is a intersection point.");
+                }
+                else {
+                    qInfo() << "Intersection point does not exist.";
+                    ui->textBrowser->append("Intersection point does not exist.");
                 }
             }
             else
             {
-                qInfo() << "Segments are collinear and intersection point does not exist.";
-                ui->textBrowser->append("Segments are collinear and intersection point does not exist.");
+                // Проверка не лежат ли сегменты на одной прямой
+                if (AB.is_point_belongs_to_line(C))
+                {
+                    if (AB.is_consist_point(C) || CD.is_consist_point(A))
+                    {
+                        Segment3D intersection;
+                        // Рассмотрение 6-и случаев, чтобы понять, какой именно сегмент является пересечением
+                        // TODO возможно есть способ сократить число проверок
+                        if (AB.is_consist_point(C) && CD.is_consist_point(B)) { // Check is intersection segment CB
+                            intersection = Segment3D(C, B, "Intersection");
+                            // qInfo() << "Segment" << QString::fromStdString(C.get_string_to_show()) << QString::fromStdString(B.get_string_to_show()) << "is an intersection segment.";
+                            // ui->textBrowser->append("Segment " + QString::fromStdString(C.get_string_to_show()) + " " + QString::fromStdString(B.get_string_to_show()) + " is an intersection segment.");
+                        }
+                        else if (AB.is_consist_point(C) && CD.is_consist_point(A)) { // Check is intersection segment AC
+                            intersection = Segment3D(A, C, "Intersection");
+                            // qInfo() << "Segment" << QString::fromStdString(C.get_string_to_show()) << QString::fromStdString(A.get_string_to_show()) << "is an intersection segment.";
+                            // ui->textBrowser->append("Segment " + QString::fromStdString(C.get_string_to_show()) + " " + QString::fromStdString(A.get_string_to_show()) + " is an intersection segment.");
+                        }
+                        else if (AB.is_consist_point(D) && CD.is_consist_point(B)) { // Check is intersection segment DB
+                            intersection = Segment3D(D, B, "Intersection");
+                            // qInfo() << "Segment" << QString::fromStdString(D.get_string_to_show()) << QString::fromStdString(B.get_string_to_show()) << "is an intersection segment.";
+                            // ui->textBrowser->append("Segment " + QString::fromStdString(D.get_string_to_show()) + " " + QString::fromStdString(B.get_string_to_show()) + " is an intersection segment.");
+                        }
+                        else if (AB.is_consist_point(D) && CD.is_consist_point(A)) { // Check is intersection segment AD
+                            intersection = Segment3D(A, D, "Intersection");
+                            // qInfo() << "Segment" << QString::fromStdString(D.get_string_to_show()) << QString::fromStdString(A.get_string_to_show()) << "is an intersection segment.";
+                            // ui->textBrowser->append("Segment " + QString::fromStdString(D.get_string_to_show()) + " " + QString::fromStdString(A.get_string_to_show()) + " is an intersection segment.");
+                        }
+                        else if (AB.is_consist_point(C) && AB.is_consist_point(D)) { // Check is segment CD inside segment AB
+                            intersection = Segment3D(C, D, "Intersection");
+                            // qInfo() << "Segment" << QString::fromStdString(D.get_string_to_show()) << QString::fromStdString(A.get_string_to_show()) << "is an intersection segment.";
+                            // ui->textBrowser->append("Segment " + QString::fromStdString(D.get_string_to_show()) + " " + QString::fromStdString(A.get_string_to_show()) + " is an intersection segment.");
+                        }
+                        else if (CD.is_consist_point(A) && CD.is_consist_point(B)) { // Check is segment AB inside segment CD
+                            intersection = Segment3D(A, B, "Intersection");
+                            // qInfo() << "Segment" << QString::fromStdString(D.get_string_to_show()) << QString::fromStdString(A.get_string_to_show()) << "is an intersection segment.";
+                            // ui->textBrowser->append("Segment " + QString::fromStdString(D.get_string_to_show()) + " " + QString::fromStdString(A.get_string_to_show()) + " is an intersection segment.");
+                        }
+                        else throw "Error while ckecking intersection segment.";
+                        if (intersection.norm() < Vector3D::eps)
+                        {
+                            qInfo() << "Zero length segment" << QString::fromStdString(intersection.get_string_to_show()) << "is an intersection point.";
+                            ui->textBrowser->append("Zero length segment " + QString::fromStdString(intersection.get_string_to_show()) + " is an intersection point.");
+                        }
+                        else
+                        {
+                            qInfo() << "Segment" << QString::fromStdString(intersection.get_string_to_show()) << "is an intersection segment.";
+                            ui->textBrowser->append("Segment " + QString::fromStdString(intersection.get_string_to_show()) + " is an intersection segment.");
+                        }
+                    }
+                    else
+                    {
+                        qInfo() << "Segments are collinear, belong to one line, but don't have an intersection - intersection point does not exist.";
+                        ui->textBrowser->append("Segments are collinear, belong to one line, but don't have an intersection - intersection point does not exist.");
+                    }
+                }
+                else
+                {
+                    qInfo() << "Segments are collinear and don't belong to one line - intersection point does not exist.";
+                    ui->textBrowser->append("Segments are collinear and don't belong to one line - intersection point does not exist.");
+                }
             }
         }
         else

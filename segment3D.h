@@ -14,6 +14,7 @@ private:
 
 public:
     Segment3D(Vector3D Start, Vector3D End, std::string Name);
+    Segment3D();
 
     std::string get_string_to_show();
     // Getters
@@ -29,6 +30,7 @@ public:
     };
     Collinear is_collinear_to_segment(Segment3D segment);
     bool is_consist_point(Vector3D point);
+    bool is_point_belongs_to_line(Vector3D point);
     static double calc_u_to_segments(Segment3D seg1, Segment3D seg2, double eps, int non_zero_det);
     static double calc_v_to_segments(Segment3D seg1, Segment3D seg2, double eps, int non_zero_det);
 

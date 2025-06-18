@@ -1,6 +1,6 @@
 #include "segment3D.h"
 
-// #include <QDebug.h> // TODO Delete when end
+#include <QDebug.h> // TODO Delete when end
 
 Segment3D::Segment3D(Vector3D Start, Vector3D End, std::string Name)
 {
@@ -8,6 +8,13 @@ Segment3D::Segment3D(Vector3D Start, Vector3D End, std::string Name)
     this->start = Start;
     this->end = End;
     this->name = Name;
+}
+
+Segment3D::Segment3D()
+{
+    this->start = Vector3D(0, 0, 0, "-");
+    this->end = Vector3D(0, 0, 0, "-");
+    this->name = "undefined";
 }
 
 
@@ -253,6 +260,34 @@ double Segment3D::calc_v_to_segments(Segment3D seg1, Segment3D seg2, double eps,
     delete [] mat1;
     delete [] mat2;
     return v;
+}
+
+/*
+    \note Подстановка в каноническое уравнение прямой
+    \note Дополнительная проверка от деления на ноль
+*/
+bool Segment3D::is_point_belongs_to_line(Vector3D point)
+{
+    double x, y, z;
+    bool flag_x, flag_y, flag_z;
+    if ((std::abs((this->start.x() - this->end.x())) < eps) && (std::abs(point.x() - this->start.x()) > eps))   return false;
+    else flag_x = std::abs((this->start.x() - this->end.x())) < eps;
+    if ((std::abs((this->start.y() - this->end.y())) < eps) && (std::abs(point.y() - this->start.y()) > eps))   return false;
+    else flag_y = std::abs((this->start.y() - this->end.y())) < eps;
+    if ((std::abs((this->start.z() - this->end.z())) < eps) && (std::abs(point.z() - this->start.z()) > eps))   return false;
+    else flag_z = std::abs((this->start.z() - this->end.z())) < eps;
+    x = flag_x < eps ? (point.x() - this->start.x()) : (point.x() - this->start.x()) / (this->start.x() - this->end.x());
+    y = flag_y < eps ? (point.y() - this->start.y()) : (point.y() - this->start.y()) / (this->start.y() - this->end.y());
+    z = flag_z < eps ? (point.z() - this->start.z()) : (point.z() - this->start.z()) / (this->start.z() - this->end.z());
+    qDebug() << x << y << z;
+    if (flag_x || flag_y || flag_z)
+    {
+        if (flag_x && flag_y || flag_x && flag_z || flag_z && flag_y) return true;
+        if (flag_x) return std::abs(y - z) < eps;
+        if (flag_y) return std::abs(x - z) < eps;
+        if (flag_z) return std::abs(y - x) < eps;
+    }
+    return (std::abs(x - y) < eps && std::abs(y - z) < eps);
 }
 
 Vector3D Segment3D::calc_intersection_point_by_uv_and_seg(double u, double v, Segment3D AB)

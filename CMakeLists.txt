@@ -44,6 +44,7 @@ else()
             segment3D.h
             minorcalcs.cpp
             readme.md
+            block_diagram.pdf
         )
     endif()
 endif()
