@@ -1,5 +1,4 @@
 #include "vector3D.h"
-#include "minorcalcs.cpp"
 
 #ifndef SEGMENT3D_H
 #define SEGMENT3D_H

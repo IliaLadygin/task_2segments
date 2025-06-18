@@ -1,6 +1,6 @@
 #include "segment3D.h"
 
-// #include <QDebug.h> // TODO Delete when end
+#include <QDebug.h> // TODO Delete when end
 
 Segment3D::Segment3D(Vector3D Start, Vector3D End, std::string Name)
 {
@@ -34,30 +34,11 @@ std::string Segment3D::get_string_to_show()
 
 bool Segment3D::is_exists_equal_surface_to(Segment3D segment)
 {
-    double **mat3;
-    mat3 = new double*[3];
-    for (unsigned int i =0; i < 3; i++)
-    {
-        mat3[i] = new double[3];
-    }
-    mat3[0][0] = this->end.x() - this->start.x();
-    mat3[0][1] = this->end.y() - this->start.y();
-    mat3[0][2] = this->end.z() - this->start.z();
-
-    mat3[1][0] = segment.start.x() - this->start.x();
-    mat3[1][1] = segment.start.y() - this->start.y();
-    mat3[1][2] = segment.start.z() - this->start.z();
-
-    mat3[2][0] = segment.end.x() - this->start.x();
-    mat3[2][1] = segment.end.y() - this->start.y();
-    mat3[2][2] = segment.end.z() - this->start.z();
-    // qInfo() << det(mat3, 3);
-    double delta = det(mat3, 3);
-    for (unsigned int i =0; i < 3; i++) {
-        delete [] mat3[i];
-    }
-    delete [] mat3;
-    return (std::abs(delta) < eps);
+    Vector3D v1 = (this->end - this->start).vector_mult(segment.end - this->start);
+    Vector3D v2 = (this->end - this->start).vector_mult(segment.start - this->start);
+    qDebug() << QString::fromStdString(v1.get_string_to_show());
+    qDebug() << QString::fromStdString(v2.get_string_to_show());
+    return v1.is_collinear_with(v2);
 }
 
 /*

@@ -22,108 +22,126 @@ MainWindow::MainWindow(QWidget *parent)
         Vector3D A(1, 1, 0, "DebugA");    Vector3D B(-1, 0, 0, "DebugB");
         Vector3D C(0, 2, 0, "DebugC");    Vector3D D(0, -2, 0, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = (0, 0.5, 0)");
+        qDebug() << "\n__Debug calc__ || ans = (0, 0.5, 0)";
         calc_ans(A, B, C, D);
     }
     {
         Vector3D A(0, 1, 1, "DebugA");    Vector3D B(0, 3, 1, "DebugB");
         Vector3D C(0, 2, -2, "DebugC");    Vector3D D(0, 2, 2, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = (0, 2, 1)");
+        qDebug() << "\n__Debug calc__ || ans = (0, 2, 1)";
         calc_ans(A, B, C, D);
     }
     {
         Vector3D A(0, 0, 1, "DebugA");    Vector3D B(0, 0, -1, "DebugB");
         Vector3D C(1, 0, -2, "DebugC");    Vector3D D(0, 0, 2, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = x");
+        qDebug() << "\n__Debug calc__ || ans = x";
         calc_ans(A, B, C, D);
     }
     {
         Vector3D A(0, 0, 1, "DebugA");    Vector3D B(0, 0, -1, "DebugB");
         Vector3D C(1, 0, -2, "DebugC");    Vector3D D(1, 0, 2, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = x");
+        qDebug() << "\n__Debug calc__ || ans = x";
         calc_ans(A, B, C, D);
     }
     {
         Vector3D A(0, 0, 1, "DebugA");    Vector3D B(0, 0, -1, "DebugB");
         Vector3D C(0, 0, 1, "DebugC");    Vector3D D(1, 0, 2, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = (0, 0, 1)");
+        qDebug() << "\n__Debug calc__ || ans = (0, 0, 1)";
         calc_ans(A, B, C, D);
     }
     {
         Vector3D A(0, 0, 1, "DebugA");    Vector3D B(0, 0, -1, "DebugB");
         Vector3D C(0, 0, 1, "DebugC");    Vector3D D(1, 1, 2, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = (0, 0, 1)");
+        qDebug() << "\n__Debug calc__ || ans = (0, 0, 1)";
         calc_ans(A, B, C, D);
     }
     {   // \note Скорее всего указанные точки недостаточно точные
         Vector3D A(1, 1, 3.5, "DebugA");    Vector3D B(0.5, 0.3, -1, "DebugB");
         Vector3D C(-1.2, -2, 1, "DebugC");    Vector3D D(1.86, 2.16, 1.99, "DebugD");
-        ui->textBrowser->append("__Debug calc__ || ans = (0.79, 0.71, 1.65)");
+        ui->textBrowser->append("__Debug calc__ || ans = (0.79, 0.71, 1.65) (wrong precision of points)");
+        qDebug() << "\n__Debug calc__ || ans = (0.79, 0.71, 1.65) (wrong precision of points)";
         calc_ans(A, B, C, D);
     }
     {   // \note Скорее всего указанные точки недостаточно точные
         Vector3D A(1, 1, 3.5, "DebugA");    Vector3D B(0.5, 0.3, -1, "DebugB");
         Vector3D C(-1.2, -2, 1, "DebugC");    Vector3D D(0.79, 0.71, 1.65, "DebugD");
-        ui->textBrowser->append("__Debug calc__ || ans = (0.79, 0.71, 1.65)");
+        ui->textBrowser->append("__Debug calc__ || ans = (0.79, 0.71, 1.65) (wrong precision of points)");
+        qDebug() << "\n__Debug calc__ || ans = (0.79, 0.71, 1.65) (wrong precision of points)";
         calc_ans(A, B, C, D);
     }
     {   // \note "Нулевой" сегмент, принадлежащий второму сегменту
         Vector3D A(-1, -1, -1, "DebugA");    Vector3D B(-1, -1, -1, "DebugB");
         Vector3D C(-1.2, -1.2, -1.2, "DebugC");    Vector3D D(1.2, 1.2, 1.2, "DebugD");
-        ui->textBrowser->append("__Debug calc__ || ans = (0, 0, 0)");
+        ui->textBrowser->append("__Debug calc__ || ans = A or B");
+        qDebug() << "\n__Debug calc__ || ans = A or B";
         calc_ans(A, B, C, D);
     }
     {   // \note "Нулевой" сегмент, принадлежащий второму сегменту
         Vector3D A(-1.2, -1.2, -1.2, "DebugA");    Vector3D B(1.2, 1.2, 1.2, "DebugB");
         Vector3D C(1, 1, 1, "DebugC");    Vector3D D(1, 1, 1, "DebugD");
-        ui->textBrowser->append("__Debug calc__ || ans = (0, 0, 0)");
+        ui->textBrowser->append("__Debug calc__ || ans = C or D");
+        qDebug() << "\n__Debug calc__ || ans = C or D";
         calc_ans(A, B, C, D);
     }
     {   // \note сегменты лежат на одной линии, но не пересекаются
         Vector3D A(1, 0, 0, "DebugA");    Vector3D B(-1, 0, 0, "DebugB");
         Vector3D C(2, 0, 0, "DebugC");    Vector3D D(4, 0, 0, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии, но не пересекаются");
+        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии, но не пересекаются";
         calc_ans(A, B, C, D);
     }
     {   // \note сегменты лежат на одной линии и пересекаются в одной точке
         Vector3D A(1, 0, 0, "DebugA");    Vector3D B(-1, 0, 0, "DebugB");
         Vector3D C(1, 0, 0, "DebugC");    Vector3D D(4, 0, 0, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии и пересекаются в одной точке");
+        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии и пересекаются в одной точке";
         calc_ans(A, B, C, D);
     }
     {   // \note сегменты лежат на одной линии и имеют целый сегмент пересечений AC
         Vector3D A(1, 0, 0, "DebugA");    Vector3D B(-1, 0, 0, "DebugB");
         Vector3D C(0, 0, 0, "DebugC");    Vector3D D(4, 0, 0, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений AC");
+        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений AC";
         calc_ans(A, B, C, D);
     }
     {   // \note сегменты лежат на одной линии и имеют целый сегмент пересечений BC
         Vector3D A(-1, 0, 0, "DebugA");    Vector3D B(1, 0, 0, "DebugB");
         Vector3D C(0, 0, 0, "DebugC");    Vector3D D(4, 0, 0, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений BC");
+        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений BC";
         calc_ans(A, B, C, D);
     }
     {   // \note сегменты лежат на одной линии и имеют целый сегмент пересечений DB
         Vector3D A(-1, 0, 0, "DebugA");    Vector3D B(1, 0, 0, "DebugB");
         Vector3D C(4, 0, 0, "DebugC");    Vector3D D(0, 0, 0, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений DB");
+        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений DB";
         calc_ans(A, B, C, D);
     }
     {   // \note сегменты лежат на одной линии и имеют целый сегмент пересечений DA
         Vector3D A(-1, 0, 0, "DebugA");    Vector3D B(1, 0, 0, "DebugB");
         Vector3D C(-4, 0, 0, "DebugC");    Vector3D D(0, 0, 0, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений DA");
+        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений DA";
         calc_ans(A, B, C, D);
     }
     {   // \note сегмент CD внутри сегмента AB
         Vector3D A(5, 0, 1, "DebugA");    Vector3D B(2, 0, 1, "DebugB");
         Vector3D C(3, 0, 1, "DebugC");    Vector3D D(4, 0, 1, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = сегмент CD внутри сегмента AB");
+        qDebug() << "\n__Debug calc__ || ans = сегмент CD внутри сегмента AB";
         calc_ans(A, B, C, D);
     }
     {   // \note сегмент AB внутри сегмента CD
         Vector3D A(3, 0, 1, "DebugA");    Vector3D B(4, 0, 1, "DebugB");
         Vector3D C(5, 0, 1, "DebugC");    Vector3D D(2, 0, 1, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = сегмент AB внутри сегмента CD");
+        qDebug() << "\n__Debug calc__ || ans = сегмент AB внутри сегмента CD";
         calc_ans(A, B, C, D);
     }
 #endif
@@ -162,10 +180,12 @@ void MainWindow::calc_ans(Vector3D A, Vector3D B, Vector3D C, Vector3D D)
 
     if (AB.is_exists_equal_surface_to(CD))
     {
-        qInfo() << "General surface exists.";
+        qDebug() << "General surface exists.";
         Segment3D::Collinear collinear = AB.is_collinear_to_segment(CD);
         if (collinear.m_is_collinear)
         {
+            qDebug() << "Segment AB is collinear to segment CD.";
+            ui->textBrowser->append("Segment AB is collinear to segment CD.");
             if (AB.norm() < Vector3D::eps) // Проверки на нулевые сегменты
             {
                 qDebug() << "Segment AB has zero length.";
@@ -197,40 +217,30 @@ void MainWindow::calc_ans(Vector3D A, Vector3D B, Vector3D C, Vector3D D)
                 // Проверка не лежат ли сегменты на одной прямой
                 if (AB.is_point_belongs_to_line(C))
                 {
-                    if (AB.is_consist_point(C) || CD.is_consist_point(A))
+                    if (AB.is_consist_point(C) || AB.is_consist_point(D) || CD.is_consist_point(A) || CD.is_consist_point(B))
                     {
+                        qDebug() << QString::fromStdString(AB.get_string_to_show());
+                        qDebug() << QString::fromStdString(CD.get_string_to_show());
                         Segment3D intersection;
                         // Рассмотрение 6-и случаев, чтобы понять, какой именно сегмент является пересечением
                         // TODO возможно есть способ сократить число проверок
                         if (AB.is_consist_point(C) && CD.is_consist_point(B)) { // Check is intersection segment CB
                             intersection = Segment3D(C, B, "Intersection");
-                            // qInfo() << "Segment" << QString::fromStdString(C.get_string_to_show()) << QString::fromStdString(B.get_string_to_show()) << "is an intersection segment.";
-                            // ui->textBrowser->append("Segment " + QString::fromStdString(C.get_string_to_show()) + " " + QString::fromStdString(B.get_string_to_show()) + " is an intersection segment.");
                         }
                         else if (AB.is_consist_point(C) && CD.is_consist_point(A)) { // Check is intersection segment AC
                             intersection = Segment3D(A, C, "Intersection");
-                            // qInfo() << "Segment" << QString::fromStdString(C.get_string_to_show()) << QString::fromStdString(A.get_string_to_show()) << "is an intersection segment.";
-                            // ui->textBrowser->append("Segment " + QString::fromStdString(C.get_string_to_show()) + " " + QString::fromStdString(A.get_string_to_show()) + " is an intersection segment.");
                         }
                         else if (AB.is_consist_point(D) && CD.is_consist_point(B)) { // Check is intersection segment DB
                             intersection = Segment3D(D, B, "Intersection");
-                            // qInfo() << "Segment" << QString::fromStdString(D.get_string_to_show()) << QString::fromStdString(B.get_string_to_show()) << "is an intersection segment.";
-                            // ui->textBrowser->append("Segment " + QString::fromStdString(D.get_string_to_show()) + " " + QString::fromStdString(B.get_string_to_show()) + " is an intersection segment.");
                         }
                         else if (AB.is_consist_point(D) && CD.is_consist_point(A)) { // Check is intersection segment AD
                             intersection = Segment3D(A, D, "Intersection");
-                            // qInfo() << "Segment" << QString::fromStdString(D.get_string_to_show()) << QString::fromStdString(A.get_string_to_show()) << "is an intersection segment.";
-                            // ui->textBrowser->append("Segment " + QString::fromStdString(D.get_string_to_show()) + " " + QString::fromStdString(A.get_string_to_show()) + " is an intersection segment.");
                         }
                         else if (AB.is_consist_point(C) && AB.is_consist_point(D)) { // Check is segment CD inside segment AB
                             intersection = Segment3D(C, D, "Intersection");
-                            // qInfo() << "Segment" << QString::fromStdString(D.get_string_to_show()) << QString::fromStdString(A.get_string_to_show()) << "is an intersection segment.";
-                            // ui->textBrowser->append("Segment " + QString::fromStdString(D.get_string_to_show()) + " " + QString::fromStdString(A.get_string_to_show()) + " is an intersection segment.");
                         }
                         else if (CD.is_consist_point(A) && CD.is_consist_point(B)) { // Check is segment AB inside segment CD
                             intersection = Segment3D(A, B, "Intersection");
-                            // qInfo() << "Segment" << QString::fromStdString(D.get_string_to_show()) << QString::fromStdString(A.get_string_to_show()) << "is an intersection segment.";
-                            // ui->textBrowser->append("Segment " + QString::fromStdString(D.get_string_to_show()) + " " + QString::fromStdString(A.get_string_to_show()) + " is an intersection segment.");
                         }
                         else throw "Error while ckecking intersection segment.";
                         if (intersection.norm() < Vector3D::eps)

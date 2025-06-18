@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 
-#include "vector3D.h"
 #include "segment3D.h"
 
 #include <QRegExpValidator>
