@@ -91,8 +91,7 @@ std::string Vector3D::get_string_to_show()
 }
 
 /*
- * \note Предназначена ТОЛЬКО для выбора координат с "ненулевым определителем"
- * // TODO не является универсальной функцией, что наверное не хорошо
+ * \note Предназначена для выбора координат с "ненулевым определителем"
  */
 Vector3D::Collinear Vector3D::get_absmax()
 {
@@ -102,7 +101,7 @@ Vector3D::Collinear Vector3D::get_absmax()
         ans.m_det_number = 1;
     }
     else if (std::abs(this->Y) >= std::abs(this->X) && std::abs(this->Y) >= std::abs(this->Z)) {
-        ans.m_det = -this->Y;
+        ans.m_det = this->Y;
         ans.m_det_number = 2;
     }
     else if (std::abs(this->Z) >= std::abs(this->Y) && std::abs(this->Z) >= std::abs(this->X)) {

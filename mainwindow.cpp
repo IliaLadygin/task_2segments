@@ -22,127 +22,134 @@ MainWindow::MainWindow(QWidget *parent)
         Vector3D A(1, 1, 0, "DebugA");    Vector3D B(-1, 0, 0, "DebugB");
         Vector3D C(0, 2, 0, "DebugC");    Vector3D D(0, -2, 0, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = (0, 0.5, 0)");
-        qDebug() << "\n__Debug calc__ || ans = (0, 0.5, 0)";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = (0, 0.5, 0)";
     }
     {
         Vector3D A(0, 1, 1, "DebugA");    Vector3D B(0, 3, 1, "DebugB");
         Vector3D C(0, 2, -2, "DebugC");    Vector3D D(0, 2, 2, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = (0, 2, 1)");
-        qDebug() << "\n__Debug calc__ || ans = (0, 2, 1)";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = (0, 2, 1)";
+    }
+    {
+        Vector3D A(1, 4, 3, "DebugA");    Vector3D B(-1, 2, 2, "DebugB");
+        Vector3D C(-4, 5, 4, "DebugC");    Vector3D D(4, 1, 1, "DebugD");
+        ui->textBrowser->append("__Debug calc__ || ans = (0, 3, 2.5)");
+        calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = (0, 3, 2.5)";
     }
     {
         Vector3D A(0, 0, 1, "DebugA");    Vector3D B(0, 0, -1, "DebugB");
-        Vector3D C(1, 0, -2, "DebugC");    Vector3D D(0, 0, 2, "DebugD");
+        Vector3D C(0, 2, -2, "DebugC");    Vector3D D(0, 2, 2, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = x");
-        qDebug() << "\n__Debug calc__ || ans = x";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = x";
     }
     {
         Vector3D A(0, 0, 1, "DebugA");    Vector3D B(0, 0, -1, "DebugB");
         Vector3D C(1, 0, -2, "DebugC");    Vector3D D(1, 0, 2, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = x");
-        qDebug() << "\n__Debug calc__ || ans = x";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = x";
     }
     {
         Vector3D A(0, 0, 1, "DebugA");    Vector3D B(0, 0, -1, "DebugB");
         Vector3D C(0, 0, 1, "DebugC");    Vector3D D(1, 0, 2, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = (0, 0, 1)");
-        qDebug() << "\n__Debug calc__ || ans = (0, 0, 1)";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = (0, 0, 1)";
     }
     {
         Vector3D A(0, 0, 1, "DebugA");    Vector3D B(0, 0, -1, "DebugB");
         Vector3D C(0, 0, 1, "DebugC");    Vector3D D(1, 1, 2, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = (0, 0, 1)");
-        qDebug() << "\n__Debug calc__ || ans = (0, 0, 1)";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = (0, 0, 1)";
     }
     {   // \note Скорее всего указанные точки недостаточно точные
         Vector3D A(1, 1, 3.5, "DebugA");    Vector3D B(0.5, 0.3, -1, "DebugB");
         Vector3D C(-1.2, -2, 1, "DebugC");    Vector3D D(1.86, 2.16, 1.99, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = (0.79, 0.71, 1.65) (wrong precision of points)");
-        qDebug() << "\n__Debug calc__ || ans = (0.79, 0.71, 1.65) (wrong precision of points)";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = (0.79, 0.71, 1.65) (wrong precision of points)";
     }
     {   // \note Скорее всего указанные точки недостаточно точные
         Vector3D A(1, 1, 3.5, "DebugA");    Vector3D B(0.5, 0.3, -1, "DebugB");
         Vector3D C(-1.2, -2, 1, "DebugC");    Vector3D D(0.79, 0.71, 1.65, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = (0.79, 0.71, 1.65) (wrong precision of points)");
-        qDebug() << "\n__Debug calc__ || ans = (0.79, 0.71, 1.65) (wrong precision of points)";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = (0.79, 0.71, 1.65) (wrong precision of points)";
     }
     {   // \note "Нулевой" сегмент, принадлежащий второму сегменту
         Vector3D A(-1, -1, -1, "DebugA");    Vector3D B(-1, -1, -1, "DebugB");
         Vector3D C(-1.2, -1.2, -1.2, "DebugC");    Vector3D D(1.2, 1.2, 1.2, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = A or B");
-        qDebug() << "\n__Debug calc__ || ans = A or B";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = A or B";
     }
     {   // \note "Нулевой" сегмент, принадлежащий второму сегменту
         Vector3D A(-1.2, -1.2, -1.2, "DebugA");    Vector3D B(1.2, 1.2, 1.2, "DebugB");
         Vector3D C(1, 1, 1, "DebugC");    Vector3D D(1, 1, 1, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = C or D");
-        qDebug() << "\n__Debug calc__ || ans = C or D";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = C or D";
     }
     {   // \note сегменты лежат на одной линии, но не пересекаются
         Vector3D A(1, 0, 0, "DebugA");    Vector3D B(-1, 0, 0, "DebugB");
         Vector3D C(2, 0, 0, "DebugC");    Vector3D D(4, 0, 0, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии, но не пересекаются");
-        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии, но не пересекаются";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии, но не пересекаются";
     }
     {   // \note сегменты лежат на одной линии и пересекаются в одной точке
         Vector3D A(1, 0, 0, "DebugA");    Vector3D B(-1, 0, 0, "DebugB");
         Vector3D C(1, 0, 0, "DebugC");    Vector3D D(4, 0, 0, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии и пересекаются в одной точке");
-        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии и пересекаются в одной точке";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии и пересекаются в одной точке";
     }
     {   // \note сегменты лежат на одной линии и имеют целый сегмент пересечений AC
         Vector3D A(1, 0, 0, "DebugA");    Vector3D B(-1, 0, 0, "DebugB");
         Vector3D C(0, 0, 0, "DebugC");    Vector3D D(4, 0, 0, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений AC");
-        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений AC";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений AC";
     }
     {   // \note сегменты лежат на одной линии и имеют целый сегмент пересечений BC
         Vector3D A(-1, 0, 0, "DebugA");    Vector3D B(1, 0, 0, "DebugB");
         Vector3D C(0, 0, 0, "DebugC");    Vector3D D(4, 0, 0, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений BC");
-        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений BC";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений BC";
     }
     {   // \note сегменты лежат на одной линии и имеют целый сегмент пересечений DB
         Vector3D A(-1, 0, 0, "DebugA");    Vector3D B(1, 0, 0, "DebugB");
         Vector3D C(4, 0, 0, "DebugC");    Vector3D D(0, 0, 0, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений DB");
-        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений DB";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений DB";
     }
     {   // \note сегменты лежат на одной линии и имеют целый сегмент пересечений DA
         Vector3D A(-1, 0, 0, "DebugA");    Vector3D B(1, 0, 0, "DebugB");
         Vector3D C(-4, 0, 0, "DebugC");    Vector3D D(0, 0, 0, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений DA");
-        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений DA";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = сегменты лежат на одной линии и имеют целый сегмент пересечений DA";
     }
     {   // \note сегмент CD внутри сегмента AB
         Vector3D A(5, 0, 1, "DebugA");    Vector3D B(2, 0, 1, "DebugB");
         Vector3D C(3, 0, 1, "DebugC");    Vector3D D(4, 0, 1, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = сегмент CD внутри сегмента AB");
-        qDebug() << "\n__Debug calc__ || ans = сегмент CD внутри сегмента AB";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = сегмент CD внутри сегмента AB";
     }
     {   // \note сегмент AB внутри сегмента CD
         Vector3D A(3, 0, 1, "DebugA");    Vector3D B(4, 0, 1, "DebugB");
         Vector3D C(5, 0, 1, "DebugC");    Vector3D D(2, 0, 1, "DebugD");
         ui->textBrowser->append("__Debug calc__ || ans = сегмент AB внутри сегмента CD");
-        qDebug() << "\n__Debug calc__ || ans = сегмент AB внутри сегмента CD";
         calc_ans(A, B, C, D);
+        qDebug() << "\n__Debug calc__ || ans = сегмент AB внутри сегмента CD";
     }
 #endif
 }

@@ -65,7 +65,7 @@ double Segment3D::calc_u_to_segments(Segment3D seg1, Segment3D seg2, Collinear c
     switch (collinear.m_det_number)
     {
     case 1: u = mult.x() / collinear.m_det; break;
-    case 2: u = -mult.y() / collinear.m_det; break;
+    case 2: u = mult.y() / collinear.m_det; break;
     case 3: u = mult.z() / collinear.m_det; break;
     default: throw "CALC U: Num of mat with non-like zero det is undefined";
     }
